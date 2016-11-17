@@ -1,6 +1,0 @@
-Testsuite: com.subbu.translate.TranslatorMainTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.677 sec
-
-Testcase: testFrenchTranslator took 2.115 sec
-Testcase: testGermanTranslator took 1.796 sec
-Testcase: testSpanishTranslator took 1.744 sec
