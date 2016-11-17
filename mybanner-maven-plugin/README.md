@@ -1,0 +1,1 @@
+This project creates a maven plugin to display an ASCII banner on the console during the maven build process. 

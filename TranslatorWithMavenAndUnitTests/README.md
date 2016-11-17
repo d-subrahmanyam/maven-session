@@ -1,0 +1,1 @@
+This project uses a maven pom build file to build the same jar as above, but in a more structured fashion along with unit-test cases.

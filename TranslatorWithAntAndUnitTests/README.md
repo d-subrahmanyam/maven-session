@@ -1,0 +1,1 @@
+This project uses an ant build file to build the same jar as above, but in a more structured fashion and executes the unit-tests before the distributable is built.

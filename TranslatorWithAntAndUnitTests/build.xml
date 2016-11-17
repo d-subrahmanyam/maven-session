@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TranslateWithAntAndUnitTests" basedir="." default="main">
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="lib.dir" value="lib" />
+	<property name="main-class" value="com.subbu.translate.TranslatorMain" />
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+	
+	<path id="project.classes.classpath">
+		<fileset dir="${classes.dir}" includes="**/*.*" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile">
+		<echo>Compiling the classes</echo>
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="compile.classpath" verbose="true" />
+	</target>
+	
+	<target name="unit.tests" depends="compile">
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<path refid="compile.classpath" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+	
+			<test name="com.subbu.translate.TranslatorMainTest" haltonfailure="no" outfile="${build.dir}/result">
+				<formatter type="brief"/>
+				<formatter type="plain" />
+				<formatter type="xml" />
+			</test>
+		</junit>
+	</target>
+
+	<target name="jar" depends="unit.tests">
+		<mkdir dir="${jar.dir}" />
+		<delete file="${classes.dir}/com/subbu/translate/TranslatorMainTest.class" verbose="true" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="lib/httpclient-4.5.2.jar lib/commons-codec-1.9.jar lib/httpcore-4.4.4.jar lib/gson-2.1.jar lib/encoder-1.2.jar lib/commons-logging-1.2.jar lib/slf4j-api-1.7.21.jar lib/slf4j-jcl-1.7.21.jar" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" depends="jar">
+		<java fork="true" classname="${main-class}">
+			<classpath>
+				<path refid="compile.classpath" />
+				<path location="${jar.dir}/${ant.project.name}.jar" />
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean-build" depends="clean,jar" />
+
+	<target name="main" depends="clean,run" />
+
+</project>
