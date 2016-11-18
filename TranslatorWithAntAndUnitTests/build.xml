@@ -33,7 +33,7 @@
 				<pathelement location="${classes.dir}" />
 			</classpath>
 	
-			<test name="com.subbu.translate.TranslatorMainTest" haltonfailure="no" outfile="${build.dir}/result">
+			<test name="com.subbu.translate.TranslatorMainTest" haltonfailure="yes" outfile="${build.dir}/result">
 				<formatter type="brief"/>
 				<formatter type="plain" />
 				<formatter type="xml" />
