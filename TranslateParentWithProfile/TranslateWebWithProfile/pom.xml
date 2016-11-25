@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.subbu.translate</groupId>
+		<artifactId>TranslateParentWithProfile</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>TranslateWebWithProfile</artifactId>
+	<packaging>war</packaging>
+	<name>TranslateWebWithProfile Maven Webapp</name>
+	<description>This is the multi-module TranslateWeb project with profile</description>
+	<dependencies>
+		<dependency>
+			<groupId>com.subbu.translate</groupId>
+			<artifactId>TranslateLibraryWithProfile</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<finalName>TranslateWeb</finalName>
+		<plugins>
+			<!-- My custom plugin -->
+			<plugin>
+				<groupId>com.subbu.maven.plugins</groupId>
+				<artifactId>mybanner-maven-plugin</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<configuration>
+					<bannerText>TranslatorWeb</bannerText>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>banner</goal>
+						</goals>
+						<phase>pre-clean</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<!-- A profile to start an embedded tomcat and run the web-app -->
+		<profile>
+			<id>dev</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<port>9090</port>
+							<path>/</path>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<phase>package</phase>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>2.3.2</version>
+						<configuration>
+							<source>${java-version}</source>
+							<target>${java-version}</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.4</version>
+						<configuration>
+							<warSourceDirectory>src/main/webapp</warSourceDirectory>
+							<warName>TranslateWeb</warName>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
